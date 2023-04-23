@@ -5,20 +5,21 @@
     margin: 0;
 }
 
-.margin-custom{
+.margin-custom {
     margin: 10px 0;
 }
 
-*{
+* {
     color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 .font-error-custom p {
     padding: 0;
     margin: 0;
-    font-size: 1.20em;
+    font-size: 1.1em;
     font-weight: bold;
-    color: rgb(246, 45, 45) !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 .font-title-custom{
@@ -26,58 +27,62 @@
     font-weight: bold !important;
 }
 
-.font-input-custom{
-font-size: 1.6em;
+.font-subtitle-custom{
+    font-size: 1.8em !important;
 }
 
-.font-login-custom{
-font-size: 1.6em;
-font-weight: bold;
-padding: 5px !important;
+.font-input-custom {
+    font-size: 1.6em;
 }
 
-.contenedor{
-   margin: auto !important;   
+.font-login-custom {
+    font-size: 1.6em;
+    font-weight: bold;
+    padding: 5px !important;
+}
+
+.contenedor {
+    margin: auto !important;
 }
 
 .d-block {
     display: block !important;
 }
 
-.bold{
+.bold {
     font-weight: bold !important;
 }
 
-.p-1{
+.p-1 {
     padding: 5px !important;
 }
 
-.transparente{
+.transparente {
     background-color: red !important;
 }
 
-.item-background-color{
-    --ion-item-background:#015f0100;
+.item-background-color {
+    --ion-item-background: #015f0100;
 }
 
-.imagen{
+.imagen {
     display: flex;
     justify-content: center;
 }
 
-.imagen img{    
+.imagen img {
     width: 100px;
     height: 100px;
     border-radius: 20px;
 }
 
-.error-message-height{
+.error-message-height {
     min-height: 25px !important;
 }
 
-.sombra{
+.sombra {
     margin: 15px 0px;
     /*horizontal - vertical - difuminado - color*/
     box-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
-    -2px -7px 5px rgba(0, 0, 0, 0.3);
+        -2px -7px 5px rgba(0, 0, 0, 0.3);
 }

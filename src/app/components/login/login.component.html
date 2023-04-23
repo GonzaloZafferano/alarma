@@ -1,11 +1,33 @@
 <div class="container-fluid m-0 pt-3 p-0 " color="success">
-  <!-- <h1 style="margin: 0; text-align: center; font-weight: bold;">Relevamiento Visual</h1> -->
-  <div class="imagen" style="margin: 1px;">
-    <img src="assets/icon.png" alt="Imagen no disponible">
+  
+  <!--CENTRADO DE BOTONES CON BLOCK o FULL (ocupa todo el ancho)-->
+  <div class="d-flex justify-content-around"> 
+    <!--BOTON 1-->
+    <ion-button slot="start" color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioUno"
+      (click)="cargarUsuario(0)">
+      <ion-title class="font-login-custom">U 1</ion-title>
+      <!-- <ion-icon slot="start" size="large" name="person-circle"></ion-icon> -->
+    </ion-button>
+    <!--BOTON 2-->
+    <ion-button color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioDos"
+      (click)="cargarUsuario(1)">
+      <ion-title class="font-login-custom">U 2</ion-title>
+      <!-- <ion-icon slot="start" size="large" name="person-circle"></ion-icon> -->
+    </ion-button>
+    <!--BOTON 3-->
+    <ion-button color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioTres"
+      (click)="cargarUsuario(2)">
+      <ion-title class="font-login-custom">U 3</ion-title>
+      <!-- <ion-icon slot="start" size="large" name="person-circle"></ion-icon> -->
+    </ion-button>
   </div>
+
+  <!-- <h1 style="margin: 0; text-align: center; font-weight: bold;">Relevamiento Visual</h1> -->
+ 
   <ion-card class="sombra " color="tertiary">
     <ion-card-header>
-      <ion-card-title class="ion-text-center font-title-custom">Complete sus datos para ingresar</ion-card-title>
+      <ion-card-title class="ion-text-center font-title-custom">BIENVENIDO</ion-card-title>
+      <ion-card-subtitle class="ion-text-center font-subtitle-custom">Ingrese sus datos a continuación</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <!--USUARIO-->
@@ -35,9 +57,9 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="12" class="ion-text-center">
-            <ion-button color="success" fill="solid" type="ion-button" (click)="login()" shape="round" id="btn-send">
+            <ion-button color="success" fill="outline" type="ion-button" (click)="login()" shape="round" id="btn-send">
               <ion-title class="font-login-custom">Iniciar Sesión</ion-title>
-              <ion-icon slot="end" size="large" name="log-in"></ion-icon>
+              <ion-icon slot="end" size="large" name="arrow-redo-outline"></ion-icon>
             </ion-button>
           </ion-col>
         </ion-row>
@@ -49,7 +71,9 @@
       <!-- <ion-label>¿No posee una cuenta? <span class="d-block">Regístrese <a href="/registro">AQUÍ</a></span></ion-label>  -->
     </ion-card-content>
   </ion-card>
-
+  <div class="imagen" style="margin: 1px;">
+    <img src="assets/icon.png" alt="Imagen no disponible">
+  </div>
   <!--boton flotante-->
   <!-- <ion-content>
   <ion-fab vertical="top" horizontal="end">
@@ -59,26 +83,4 @@
     </ion-button>
   </ion-fab>
 </ion-content> -->
-
-  <!--CENTRADO DE BOTONES CON BLOCK o FULL (ocupa todo el ancho)-->
-  <div>
-    <!--BOTON 1-->
-    <ion-button expand="block" color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioUno"
-      (click)="cargarUsuario(0)">
-      <ion-title class="font-login-custom">Usuario 1</ion-title>
-      <ion-icon slot="start" size="large" name="person-circle"></ion-icon>
-    </ion-button>
-    <!--BOTON 2-->
-    <ion-button expand="full" color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioDos"
-      (click)="cargarUsuario(1)">
-      <ion-title class="font-login-custom">Usuario 2</ion-title>
-      <ion-icon slot="start" size="large" name="person-circle"></ion-icon>
-    </ion-button>
-    <!--BOTON 3-->
-    <ion-button expand="block" color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioTres"
-      (click)="cargarUsuario(2)">
-      <ion-title class="font-login-custom">Usuario 3</ion-title>
-      <ion-icon slot="start" size="large" name="person-circle"></ion-icon>
-    </ion-button>
-  </div>
 </div>
