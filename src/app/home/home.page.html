@@ -1,0 +1,9 @@
+<div *ngIf="(afAuth.user | async); else loguearUsuario">
+  <app-bienvenido></app-bienvenido>
+</div>
+<ng-template #loguearUsuario>
+
+   <app-login></app-login>
+
+</ng-template>
+

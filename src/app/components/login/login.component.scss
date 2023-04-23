@@ -1,0 +1,83 @@
+.font-error-custom {
+    font-weight: bold;
+    text-align: start;
+    padding: 0;
+    margin: 0;
+}
+
+.margin-custom{
+    margin: 10px 0;
+}
+
+*{
+    color: white;
+}
+
+.font-error-custom p {
+    padding: 0;
+    margin: 0;
+    font-size: 1.20em;
+    font-weight: bold;
+    color: rgb(246, 45, 45) !important;
+}
+
+.font-title-custom{
+    font-size: 2.5em !important;
+    font-weight: bold !important;
+}
+
+.font-input-custom{
+font-size: 1.6em;
+}
+
+.font-login-custom{
+font-size: 1.6em;
+font-weight: bold;
+padding: 5px !important;
+}
+
+.contenedor{
+   margin: auto !important;   
+}
+
+.d-block {
+    display: block !important;
+}
+
+.bold{
+    font-weight: bold !important;
+}
+
+.p-1{
+    padding: 5px !important;
+}
+
+.transparente{
+    background-color: red !important;
+}
+
+.item-background-color{
+    --ion-item-background:#015f0100;
+}
+
+.imagen{
+    display: flex;
+    justify-content: center;
+}
+
+.imagen img{    
+    width: 100px;
+    height: 100px;
+    border-radius: 20px;
+}
+
+.error-message-height{
+    min-height: 25px !important;
+}
+
+.sombra{
+    margin: 15px 0px;
+    /*horizontal - vertical - difuminado - color*/
+    box-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
+    -2px -7px 5px rgba(0, 0, 0, 0.3);
+}

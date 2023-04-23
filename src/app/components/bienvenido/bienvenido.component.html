@@ -1,0 +1,23 @@
+<div class="contenedor">
+  <ion-header [translucent]="true">
+    <!-- <ion-title class="text-center">
+      <h3>
+        BIENVENIDO
+      </h3>
+    </ion-title> -->
+    <div class="d-flex justify-content-center p-2">
+      <ion-buttons>
+        <!-- <ion-button color="primary" fill="solid" shape="round" id="btn-flash" (click)="flash()">
+              <ion-title class="font-weight-bold">FLASH</ion-title>
+              <ion-icon  size="large" slot="end" name="log-out"></ion-icon>
+            </ion-button> -->
+        <ion-button color="danger" fill="solid" shape="round" id="btn-logout" (click)="logout()">
+          <ion-title class="font-weight-bold">Cerrar sesion</ion-title>
+          <ion-icon size="large" slot="end" name="log-out"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-header>
+  <ion-content color="primary" [fullscreen]="true">
+  </ion-content>
+</div>

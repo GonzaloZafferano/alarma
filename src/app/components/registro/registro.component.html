@@ -1,0 +1,48 @@
+<div class="container contenedor bg-light p-1">
+  <h3 class="text-dark text-center">Formulario de Registro</h3>
+  <form id="frmRegister" (ngSubmit)="registrar()">
+    <ion-list class="">
+      <div class="form-floating mb-0 d-flex flex-column align-items-start font-weight-bold">
+        <label class="text-start text-dark" for="floatingInputValue">Ingrese su dirección de correo:</label>
+        <!--REQUIERE LA PROPIEDAD 'name' para que funcione el NGMODEL-->
+        <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com"
+          (input)="validadCampoVacio()" name="email" [(ngModel)]="email">
+        <div class="letra-rojo-bold">
+          <p>{{mensajeEmail}}</p>
+        </div>
+      </div>
+      <div class="form-floating mb-0 d-flex flex-column align-items-start">
+        <label for="floatingInputPassword" class="text-left text-dark font-weight-bold">Ingrese su contraseña:</label>
+        <input type="password" class="form-control" id="floatingInputPassword" placeholder="Password" name="password"
+          (input)="validadCampoVacio()" [(ngModel)]="password">
+        <div class="letra-rojo-bold m-0">
+          <p>{{mensajePass}}</p>
+        </div>
+      </div>
+      <div class="form-floating mb-0 d-flex flex-column align-items-start">
+        <label for="floatingInputPassword" class="text-left text-dark font-weight-bold">Reingrese su contraseña:</label>
+        <input type="password" class="form-control" id="floatingInputPassword" placeholder="Confirm password"
+          name="confirmPassword" (input)="validadCampoVacio()" [(ngModel)]="confirmPassword">
+        <div class="letra-rojo-bold m-0">
+          <p>{{mensajeConfirmPassword}}</p>
+        </div>
+      </div>
+
+      <div class="m-2">
+        <ion-toolbar class="m-0">
+          <ion-label>¿Esta registrado? <span class="d-block">Ingrese <a href="/login">AQUI</a></span></ion-label> 
+          <ion-buttons slot="end">   
+            <!--REGISTRAR-->
+            <ion-button color="warning" fill="solid" shape="round" type="submit" id="btn-register"s> <!-- (click)="registrar()"> -->
+              <ion-title class="font-weight-bold">sing up</ion-title>
+              <ion-icon slot="end" size="large" name="person-circle"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </div>
+      <div class="letra-rojo-bold">
+        <p>{{mensajeError}}</p>
+      </div>     
+    </ion-list>
+  </form>
+</div>
