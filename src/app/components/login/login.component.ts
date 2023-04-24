@@ -83,12 +83,26 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  validadCampoVacio(item : IonInput) {  
-    if (item.type === "password" && item.value != '') 
-      this.mensajePass = '';    
+  validadCampoVacio(item: IonInput) {
+    let errorEnDatos = false;
 
-      if (item.type === "text" && item.value != '') 
-      this.mensajeEmail = '';    
+    if (item.type === "password") {
+      if (item.value != '')
+        this.mensajePass = '';
+      else
+        errorEnDatos = true;
+    }
+
+    if (item.type === "text") {
+      if (item.value != '')
+        this.mensajeEmail = '';
+      else
+        errorEnDatos = true;
+    }
+
+    if (this.mensajeEmail == '' && this.mensajePass == '') {
+      this.mensajeError = '';
+    }
   }
 
   limpiarCampos(){
