@@ -7,6 +7,9 @@
 
 .margin-custom {
     margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 * {
@@ -23,8 +26,9 @@
 }
 
 .font-title-custom{
-    font-size: 2.5em !important;
+    font-size: 3em !important;
     font-weight: bold !important;
+    padding: 5px;
 }
 
 .font-subtitle-custom{
@@ -32,7 +36,8 @@
 }
 
 .font-input-custom {
-    font-size: 1.6em;
+    font-size: 1.9em;
+    text-align: center !important;
 }
 
 .font-login-custom {
@@ -85,4 +90,11 @@
     /*horizontal - vertical - difuminado - color*/
     box-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
         -2px -7px 5px rgba(0, 0, 0, 0.3);
+}
+
+.input-custom{
+    background-color: #85BDA6;
+    border-end-end-radius: 35px ;
+    border-top-right-radius: 35px;   
+    text-align: center; 
 }
