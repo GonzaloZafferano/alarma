@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, NgForm } from '@angular/forms';
-import { IonInput, IonicModule } from '@ionic/angular';
+import { IonInput, IonicModule, LoadingController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { Output, EventEmitter } from '@angular/core';
@@ -8,6 +8,14 @@ import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/usuario';
+import { NativeAudio } from '@capacitor-community/native-audio'
+import { Howl, Howler } from 'howler';
+
+//import { DeviceMotion, DeviceMotionAccelerationData } from '@ionic-native/device-motion';
+
+import { DeviceMotion, DeviceMotionAccelerationData } from '@awesome-cordova-plugins/device-motion/ngx';
+
+import { DeviceOrientation, DeviceOrientationCompassHeading } from '@awesome-cordova-plugins/device-orientation/ngx';
 
 
 @Component({
@@ -33,16 +41,113 @@ export class LoginComponent implements OnInit {
   mensajeError: string = '';
   mensajePass: string = '';
   mensajeEmail: string = '';
-  usuarios : Usuario [] = [];
-  ruta : string = "/resources/icon.png";
-  constructor(private loginService: LoginService, private router:Router) { }
-  ngOnInit() {
-    this.usuarios.push(new Usuario('gonzalo@prueba.com', '123456'));
-    this.usuarios.push(new Usuario('silas@prueba.com', '654321'));
-    this.usuarios.push(new Usuario('nico@prueba.com','111111'));
-   }
+  usuarios: Usuario[] = [];
+  ruta: string = "/resources/icon.png";
 
-  login() {   
+  x: number = 0;
+  y: number = 0;
+  z: number = 0;
+  t: number = 0;
+
+  headingAccuracy: number = 0;
+  magneticHeading: number = 0;
+  timestamp: number = 0;
+  trueHeading: number = 0;
+  isVertical: boolean = false;
+  isHorizontal: boolean = false;
+  isMovingLeft: boolean = false;
+  isMovingRight: boolean = false;
+
+  isVertical2: boolean = false;
+  isHorizontal2: boolean = false;
+  isMovingLeft2: boolean = false;
+  isMovingRight2: boolean = false;
+
+  constructor(private loginService: LoginService, private router: Router, private deviceMotion: DeviceMotion,
+    public toastController: ToastController,
+    public loadingController: LoadingController,
+    private deviceOrientation: DeviceOrientation) {
+
+    this.deviceMotion.getCurrentAcceleration().then(
+      (acceleration: DeviceMotionAccelerationData) => console.log(acceleration),
+      (error: any) => console.log(error)
+    );
+
+  }
+
+
+
+
+  ngOnInit() {
+    this.usuarios.push(new Usuario('admin@admin.com', '111111'));
+    this.usuarios.push(new Usuario('invitado@invitado.com', '222222'));
+    this.usuarios.push(new Usuario('usuario@usuario.com', '333333'));
+    this.usuarios.push(new Usuario('tester@tester.com', '555555'));
+
+
+
+    // var subscription = this.deviceMotion.watchAcceleration({ frequency: 100 }).subscribe((acceleration: DeviceMotionAccelerationData) => {
+    //   console.log(acceleration);
+    //   this.x = acceleration.x;
+    //   this.y = acceleration.y;
+    //   this.z = acceleration.z;
+    //   this.t = acceleration.timestamp;
+    //   //   alert();
+
+    //   this.isHorizontal = Math.abs(acceleration.x) > Math.abs(acceleration.y) && Math.abs(acceleration.x) > Math.abs(acceleration.z);
+
+    //   this.isVertical = Math.abs(acceleration.y) > Math.abs(acceleration.x) && Math.abs(acceleration.y) > Math.abs(acceleration.z);
+
+    //   const threshold = -1.5; // Umbral negativo para detectar movimiento hacia la izquierda
+    //   this.isMovingLeft = acceleration.y < threshold;
+
+    //   const threshold2 = 1.5; // Umbral positivo para detectar movimiento hacia la derecha
+
+    //   this.isMovingRight = acceleration.y > threshold2;
+
+    //   //MIS DATOS
+
+    //   this.isHorizontal2 = (acceleration.x > 0 && acceleration.x < 1) &&
+    //     (acceleration.y > 0 && acceleration.y < 1) &&
+    //     (acceleration.z > 9 && acceleration.z < 10);
+
+    //   this.isMovingLeft2 = acceleration.x > 1.5;
+    //   this.isMovingRight2 = acceleration.x < -1.5;// && acceleration.x;
+    // });
+
+    // var subscription = this.deviceOrientation.watchHeading().subscribe(
+    //   (data: DeviceOrientationCompassHeading) => {
+    //     console.log(data);
+
+
+    //     this.headingAccuracy = data.headingAccuracy;
+    //     this.magneticHeading = data.magneticHeading;
+    //     this.timestamp = data.timestamp;
+    //     this.trueHeading = data.trueHeading;
+    //     /*
+    //     magneticHeading: The heading in degrees from 0-359.99 at a single moment in time. (Number)
+
+    //     trueHeading: The heading relative to the geographic North Pole in degrees 0-359.99 at a single moment in time. A negative value indicates that the true heading can't be determined. (Number)
+
+    //     headingAccuracy: The deviation in degrees between the reported heading and the true heading. (Number)
+
+    //     timestamp: The time at which this heading was determined. (DOMTimeStamp)
+    //      */
+    //   }
+    // );
+
+    this.sound = new Howl({
+      src: ['assets/prueba.mp3'],
+      preload: true
+    });
+
+
+  }
+
+
+  sound: any;
+
+ async login() {
     let errorEnDatos = false;
     let emailValido = false;
 
@@ -69,15 +174,19 @@ export class LoginComponent implements OnInit {
         this.mensajePass = '';
 
     if (!errorEnDatos && emailValido) {
-      this.loginService.loguearUsuario(this.email, this.password)
-      .then(() => {
-        this.limpiarCampos();
-        this.router.navigate(['/home']);
 
-        //this.addNewItem(true);
-      }).catch(() => {
-        this.mensajeError = "Correo o contraseña inválidos.";
-      });
+      const loading = await this.presentLoading();
+      this.loginService.loguearUsuario(this.email, this.password)
+        .then(() => {
+          this.limpiarCampos();
+          this.router.navigate(['/home']);
+          setTimeout(() => {
+            loading.dismiss();            
+          }, 2000);
+        }).catch(() => {
+          this.mensajeError = "Correo o contraseña inválidos.";
+          loading.dismiss();
+        });
     } else {
       this.mensajeError = 'Corrija los errores y vuelva a intentar.';
     }
@@ -105,7 +214,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  limpiarCampos(){
+  limpiarCampos() {
     this.email = '';
     this.password = '';
   }
@@ -122,22 +231,35 @@ export class LoginComponent implements OnInit {
     this.newItemEvent.emit(value);
   }
 
-  registrar(){  
+  registrar() {
     this.router.navigate(['/registro']);
   }
 
-  limpiarErrores(){
+  limpiarErrores() {
     this.mensajeEmail = '';
     this.mensajeError = '';
     this.mensajePass = '';
   }
-  
-  cargarUsuario(indice : number){
-    if(indice >= 0 && indice < this.usuarios.length){
+
+  cargarUsuario(indice: number) {
+    if (indice >= 0 && indice < this.usuarios.length) {
       this.limpiarErrores();
       let usuario = this.usuarios[indice];
       this.email = usuario.usuario;
       this.password = usuario.password;
     }
+  }
+
+  
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Cargando configuraciones',
+      spinner: 'circular',
+      translucent: true,
+      cssClass: 'custom-class'
+    });
+
+    await loading.present();
+    return loading;
   }
 }

@@ -5,7 +5,17 @@ import { AngularFireAuth } from '@angular/fire/compat/auth';
   providedIn: 'root'
 })
 export class LoginService {
-  constructor(private auth: AngularFireAuth) { }
+  suscripcion : any;
+  usuario : any;
+  constructor(private auth: AngularFireAuth) { 
+
+    if(this.suscripcion)
+    this.suscripcion.subscribe();
+
+    this.auth.authState.subscribe(x =>{
+      this.usuario = x;
+    });
+  }
 
   registrarUsuario(usuario:string, password:string){
     return this.auth.createUserWithEmailAndPassword(usuario, password);
@@ -18,4 +28,6 @@ export class LoginService {
   desloguear(){
     return this.auth.signOut();
   }
+
+
 }

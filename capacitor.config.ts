@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'io.ionic.starter',
-  appName: 'PruebaApp',
+  appName: 'Alarma de robo',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

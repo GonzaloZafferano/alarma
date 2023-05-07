@@ -29,3 +29,18 @@
 .container{
   margin: auto;
 }
+
+.sombra{
+  box-shadow: 2px 7px 5px rgba(0, 0, 0, 0.3),
+  -2px -7px 5px rgba(0, 0, 0, 0.3);
+border-radius: 60px;
+}
+
+.transicion{ 
+   transition: transform 1s ease-out;
+}
+
+ion-fab.password-card{  
+position: absolute !important;
+transform: translate(100%);
+}

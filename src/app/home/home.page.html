@@ -1,9 +1,42 @@
-<div *ngIf="(afAuth.user | async); else loguearUsuario">
-  <app-bienvenido></app-bienvenido>
+<div class="contenedor">
+  <ion-header [translucent]="true">
+    <!-- <ion-title class="text-center">
+      <h3>
+        BIENVENIDO
+      </h3>
+    </ion-title> -->
+    <div class="d-flex justify-content-center p-2">
+      <ion-buttons>
+        <!-- <ion-button color="primary" fill="solid" shape="round" id="btn-flash" (click)="flash()">
+              <ion-title class="font-weight-bold">FLASH</ion-title>
+              <ion-icon  size="large" slot="end" name="log-out"></ion-icon>
+            </ion-button> -->
+        <ion-button color="warning" fill="outline"shape="round" id="btn-logout" [disabled]="asegurar" (click)="logout()">
+          <ion-title class="font-weight-bold" style="text-transform: uppercase;">Cerrar sesión</ion-title>
+          <ion-icon size="large" slot="end" name="arrow-undo-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </div>
+  </ion-header>
+  <div color="primary" >
+    <ion-fab class="transicion"  [ngClass]="{'password-card': ocultar}" style="position: fixed; margin-top: -50px;">
+      <div style="background-color: #3E885B; border: 3px solid #ffc409; font-size: 1.2em; text-align: center; margin: 5px; border-radius: 15px;">
+        <ion-label>Ingrese su contraseña para desactivar la alarma</ion-label>
+        <ion-input style="border: 1px solid white; margin: auto; border-radius: 50px;" type="password" [(ngModel)]="clave" ></ion-input>
+        <ion-button color="warning" fill="outline"shape="round" (click)="validar()"  style="font-size: bold; color: white !important; ">
+          <ion-text style="color: white  !important; font-weight: bold;">
+                        ACEPTAR
+
+          </ion-text>
+        </ion-button>
+      </div>
+    </ion-fab>
+    <ion-buttons >
+      <ion-button class="sombra" style="width: 97vw; height: 90vh; margin-left: 5px; margin-top: 15px;"  slot="start" color="medium" fill="solid" type="Button" shape="round" id="btn-usuarioUno"
+      (click)="alarma()">
+    <img [src]="rutaImagen" style="width: 75vw;">
+      <!-- <ion-icon slot="start" size="large" name="person-circle"></ion-icon> -->
+    </ion-button>
+  </ion-buttons>
+  </div>
 </div>
-<ng-template #loguearUsuario>
-
-   <app-login></app-login>
-
-</ng-template>
-
