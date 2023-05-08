@@ -12,8 +12,9 @@
               <ion-icon  size="large" slot="end" name="log-out"></ion-icon>
             </ion-button> -->
         <ion-button color="warning" fill="outline"shape="round" id="btn-logout" [disabled]="asegurar" (click)="logout()">
-          <ion-title class="font-weight-bold" style="text-transform: uppercase;">Cerrar sesión</ion-title>
-          <ion-icon size="large" slot="end" name="arrow-undo-outline"></ion-icon>
+          <ion-title *ngIf="!asegurar" class="font-weight-bold" style="text-transform: uppercase;">Cerrar sesión</ion-title>
+          <ion-icon *ngIf="!asegurar" size="large" slot="end" name="arrow-undo-outline"></ion-icon>
+          <ion-icon *ngIf="asegurar" size="large" style="color: black;" name="lock-closed"></ion-icon>
         </ion-button>
       </ion-buttons>
     </div>

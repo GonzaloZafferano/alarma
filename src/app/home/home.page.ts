@@ -90,7 +90,7 @@ export class HomePage {
           this.naturalI = false;
           this.naturalV = true;
           this.flash();
-          this.nativeAudio.loop('ver');
+          this.nativeAudio.play('ver');
 
           setTimeout(() => {
             this.flash();
@@ -129,7 +129,9 @@ export class HomePage {
           this.naturalV = false;
 
           Haptics.vibrate({ duration: 5000 });
-          this.nativeAudio.loop('hor');
+          this.nativeAudio.play('hor').then(x =>{
+            this.nativeAudio.play('hor');
+          });
 
           setTimeout(() => {
             this.nativeAudio.stop('hor');
@@ -211,7 +213,9 @@ export class HomePage {
 
       this.moviendo = true;
 
-      this.nativeAudio.loop('error');
+      this.nativeAudio.play('error').then(x =>{
+        this.nativeAudio.play('error');
+      });
       Haptics.vibrate({ duration: 5000 });
       this.flash();
 
