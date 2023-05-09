@@ -4,6 +4,7 @@ import { HomePage } from './home/home.page';
 import { Router } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AnimationTriggerMetadata, animate, style, transition, trigger } from '@angular/animations';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-root',
@@ -13,8 +14,9 @@ import { AnimationTriggerMetadata, animate, style, transition, trigger } from '@
   imports: [IonicModule, HomePage],
 })
 export class AppComponent {
-  constructor(private platform : Platform, private router : Router) {
-   
+  constructor(private platform : Platform, private router : Router,private screenOrientation: ScreenOrientation) {
+      // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);//BLOQUEO HORIZONTAL
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT); //BLOQUEO VERTICAL
   }
 
   initializeApp(){

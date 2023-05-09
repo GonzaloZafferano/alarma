@@ -13,6 +13,7 @@ import { Flashlight } from '@awesome-cordova-plugins/flashlight/ngx';
 import { Haptics } from '@capacitor/haptics';
 import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
 import { DeviceMotion, DeviceMotionAccelerationData } from '@awesome-cordova-plugins/device-motion/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +26,7 @@ import { DeviceMotion, DeviceMotionAccelerationData } from '@awesome-cordova-plu
     LoginComponent,
     RegistroComponent,
     BienvenidoComponent], //Array de MODULOS Y 'COMPONENTES QUE SEAN STANDALONE:true'
-  providers: [Flashlight]
+  providers: [Flashlight, ScreenOrientation]
 })
 
 export class HomePage {
@@ -42,10 +43,14 @@ export class HomePage {
   naturalI: boolean = false;
   naturalD: boolean = false;
   subscription: any;
-  asegurar : boolean = false;
+  asegurar: boolean = false;
+  errorPass: boolean = false;
 
-  constructor(private deviceMotion: DeviceMotion, private nativeAudio: NativeAudio, private loginService: LoginService, private angularFireAuth: AngularFireAuth, public loadingController: LoadingController, private router: Router, private flashlight: Flashlight) {
+  constructor(private screenOrientation: ScreenOrientation, private deviceMotion: DeviceMotion, private nativeAudio: NativeAudio, private loginService: LoginService, private angularFireAuth: AngularFireAuth, public loadingController: LoadingController, private router: Router, private flashlight: Flashlight) {
     this.afAuth = angularFireAuth;
+    // this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);//HORIZONTAL
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+
   }
 
   ngOnInit() {
@@ -83,61 +88,71 @@ export class HomePage {
         let isMovingLeft2 = acceleration.x > 2.5;
         let isMovingRight2 = acceleration.x < -2.5;
 
-        if (isVertical && !this.naturalV && !this.moviendo) {
-          this.moviendo = true;
-          this.naturalH = false;
-          this.naturalD = false;
-          this.naturalI = false;
-          this.naturalV = true;
-          this.flash();
-          this.nativeAudio.play('ver');
+        if (isHorizontal2) {
+          if (!this.naturalH && !this.moviendo) {
+            this.moviendo = true;
+            this.naturalH = true;
+            this.naturalD = false;
+            this.naturalI = false;
+            this.naturalV = false;
 
-          setTimeout(() => {
+            Haptics.vibrate({ duration: 5000 });
+            this.nativeAudio.loop('hor').then(x => {
+              //this.nativeAudio.play('hor');//NO FUNCA
+            });
+
+            setTimeout(() => {
+              this.nativeAudio.stop('hor');
+              this.moviendo = false;
+            }, 6200);
+          }
+        } else if (isMovingLeft2) {
+          if (!this.naturalI && !this.moviendo) {
+            this.moviendo = true;
+            this.naturalH = false;
+            this.naturalD = false;
+            this.naturalI = true;
+            this.naturalV = false;
+
+            this.nativeAudio.play('izq');
+
+            setTimeout(() => {
+              this.moviendo = false;
+            }, 5000);
+          }
+
+        } else if (isMovingRight2) {
+          if (!this.naturalD && !this.moviendo) {
+            this.moviendo = true;
+            this.naturalH = false;
+            this.naturalD = true;
+            this.naturalI = false;
+            this.naturalV = false;
+            this.nativeAudio.play('der');
+
+            setTimeout(() => {
+              this.moviendo = false;
+            }, 5000);
+          }
+        } else if (isVertical) {
+          if (!this.naturalV && !this.moviendo) {
+            this.moviendo = true;
+            this.naturalH = false;
+            this.naturalD = false;
+            this.naturalI = false;
+            this.naturalV = true;
             this.flash();
-            this.nativeAudio.stop('ver');
-            this.moviendo = false;
-          }, 7000);
-        }else if (isMovingLeft2 && !this.naturalI && !this.moviendo) {
-          this.moviendo = true;
-          this.naturalH = false;
-          this.naturalD = false;
-          this.naturalI = true;
-          this.naturalV = false;
+            this.nativeAudio.loop('ver');
 
-          this.nativeAudio.play('izq');
+            setTimeout(() => {
+              this.flash();
+              this.nativeAudio.stop('ver');
+              this.moviendo = false;
+            }, 7000);
+          }
 
-          setTimeout(() => {
-            this.moviendo = false;
-          }, 5000);
         }
-        else if (isMovingRight2 && !this.naturalD && !this.moviendo) {
-          this.moviendo = true;
-          this.naturalH = false;
-          this.naturalD = true;
-          this.naturalI = false;
-          this.naturalV = false;
-          this.nativeAudio.play('der');
 
-          setTimeout(() => {
-            this.moviendo = false;
-          }, 5000);
-        }else if (isHorizontal2 && !this.naturalH && !this.moviendo) {
-          this.moviendo = true;
-          this.naturalH = true;
-          this.naturalD = false;
-          this.naturalI = false;
-          this.naturalV = false;
-
-          Haptics.vibrate({ duration: 5000 });
-          this.nativeAudio.play('hor').then(x =>{
-            this.nativeAudio.play('hor');
-          });
-
-          setTimeout(() => {
-            this.nativeAudio.stop('hor');
-            this.moviendo = false;
-          }, 7000);
-        }
       }
     });
   }
@@ -152,12 +167,12 @@ export class HomePage {
   }
 
   async logout() {
-    if(!this.asegurar){
+    if (!this.asegurar) {
       const loading = await this.presentLoading();
       //this.rutaImagen = this.rutaAbierto;
       //this.abierto = true;
       //this.asegurar = false;
-      
+
       setTimeout(() => {
         this.loginService.desloguear();
         this.router.navigate(['/login']);
@@ -211,11 +226,13 @@ export class HomePage {
       }
     } catch (err) {
 
-      this.moviendo = true;
-
-      this.nativeAudio.play('error').then(x =>{
-        this.nativeAudio.play('error');
-      });
+      if (!this.errorPass) {
+        this.moviendo = true;
+        this.errorPass = true;
+        this.nativeAudio.loop('error').then(x => {
+          // this.nativeAudio.play('error'); NO FUNCA
+        });
+      }
       Haptics.vibrate({ duration: 5000 });
       this.flash();
 
@@ -223,6 +240,7 @@ export class HomePage {
         this.flash();
         this.nativeAudio.stop('error');
         this.moviendo = false;
+        this.errorPass = false;
       }, 7000);
     };
     this.clave = '';

@@ -12,6 +12,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { DeviceMotion } from '@awesome-cordova-plugins/device-motion/ngx';
 import { DeviceOrientation } from '@awesome-cordova-plugins/device-orientation/ngx';
 import { NativeAudio } from '@awesome-cordova-plugins/native-audio/ngx';
+import { ScreenOrientation } from '@awesome-cordova-plugins/screen-orientation/ngx';
 
 if (environment.production) {
   enableProdMode();
@@ -24,7 +25,7 @@ bootstrapApplication(AppComponent, {
     NativeAudio,
     DeviceOrientation,
     DeviceMotion,
-
+    ScreenOrientation,
     
     //Y ESTO
     importProvidersFrom(AngularFireModule.initializeApp(environment.firebaseConfig)),
